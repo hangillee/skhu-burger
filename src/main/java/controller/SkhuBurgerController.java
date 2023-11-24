@@ -1,10 +1,24 @@
 package controller;
 
-import view.MainView;
+import view.CategoryPanel;
+import view.CouponPanel;
+import view.MainFrame;
+import view.MainPanel;
+import view.MenuPanel;
 
 public class SkhuBurgerController {
-    public void printFrame() {
-        MainView mainView = new MainView();
-        mainView.printFrame();
+    private final MainFrame mainFrame = new MainFrame();
+
+    public void createPanels() {
+        MainFrame.getPanels().add(new MainPanel(), "MainPanel");
+        MainFrame.getPanels().add(new CategoryPanel(), "CategoryPanel");
+        MainFrame.getPanels().add(new CouponPanel(), "CouponPanel");
+        MainFrame.getPanels().add(new MenuPanel(), "MenuPanel");
+    }
+
+    public void printMainFrame() {
+        createPanels();
+        mainFrame.add(MainFrame.getPanels());
+        mainFrame.setVisible(true);
     }
 }
