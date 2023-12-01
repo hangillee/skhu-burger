@@ -1,40 +1,41 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.net.URL;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class CouponPanel extends JPanel {
-    public CouponPanel() {
+public class CashPanel extends JPanel {
+    public CashPanel() {
         setBackground(Color.decode("#FFB347"));
         setLayout(null);
         BackgroundPanel backgroundPanel = new BackgroundPanel();
         backgroundPanel.setBounds(30, 30, 480, 720);
         add(backgroundPanel);
+        setVisible(true);
     }
 
     static class BackgroundPanel extends JPanel {
         public BackgroundPanel() {
             setPreferredSize(new Dimension(480, 720));
             setBackground(Color.decode("#FFFFFF"));
-            setLayout(new BorderLayout());
-
-            LabelPanel labelPanel = new LabelPanel();
-            add(labelPanel, BorderLayout.NORTH);
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
             ImagePanel imagePanel = new ImagePanel();
-            add(imagePanel, BorderLayout.CENTER);
+            add(imagePanel);
+
+            LabelPanel labelPanel = new LabelPanel();
+            add(labelPanel);
 
             ButtonPanel buttonPanel = new ButtonPanel();
-            add(buttonPanel, BorderLayout.SOUTH);
+            add(buttonPanel);
         }
     }
 
@@ -42,29 +43,37 @@ public class CouponPanel extends JPanel {
         public LabelPanel() {
             setPreferredSize(new Dimension(480, 100));
             setBackground(Color.decode("#FFFFFF"));
-            setLayout(new BorderLayout());
+            setLayout(null);
 
-            JLabel text = new JLabel("쿠폰의 바코드를 스캔해주세요.");
-            text.setFont(new Font("Gothic", Font.BOLD, 36));
-            text.setHorizontalAlignment(JLabel.CENTER);
+            JLabel firstText = new JLabel("주문표를 지참해");
+            firstText.setFont(new Font("Gothic", Font.BOLD, 36));
+            firstText.setHorizontalAlignment(JLabel.CENTER);
+            firstText.setBounds(0, 0, 480, 50);
 
-            add(text, BorderLayout.CENTER);
+            JLabel secondText = new JLabel("카운터에서 결제해주세요.");
+            secondText.setFont(new Font("Gothic", Font.BOLD, 36));
+            secondText.setHorizontalAlignment(JLabel.CENTER);
+            secondText.setBounds(0, 50, 480, 50);
+
+            add(firstText);
+            add(secondText);
         }
     }
 
     static class ImagePanel extends JPanel {
         public ImagePanel() {
-            setPreferredSize(new Dimension(480, 400));
+            setPreferredSize(new Dimension(480, 250));
             setBackground(Color.decode("#FFFFFF"));
-            setLayout(new BorderLayout());
+            setLayout(null);
 
             JLabel image = new JLabel();
-            image.setPreferredSize(new Dimension(480, 400));
+            image.setPreferredSize(new Dimension(480, 250));
             image.setHorizontalAlignment(JLabel.CENTER);
-            URL url = getClass().getClassLoader().getResource("images/coupon/Info.png");
+            URL url = getClass().getClassLoader().getResource("images/payment/Counter.png");
             image.setIcon(new ImageIcon(url));
+            image.setBounds(0, 50, 480, 250);
 
-            add(image, BorderLayout.CENTER);
+            add(image);
         }
     }
 
@@ -74,27 +83,30 @@ public class CouponPanel extends JPanel {
             setBackground(Color.decode("#FFFFFF"));
             setLayout(new FlowLayout(FlowLayout.CENTER));
 
-            JButton cancel = createButton("images/Cancel.png");
+            JButton cancel = createButton("images/Cancel.png", 158, 64);
             cancel.addActionListener(e -> {
                 CardLayout cardLayout = (CardLayout) MainFrame.getPanels().getLayout();
-                cardLayout.show(MainFrame.getPanels(), "MainPanel");
+                cardLayout.show(MainFrame.getPanels(), "PaymentPanel");
+            });
+
+            JButton receipt = createButton("images/payment/Receipt.png", 200, 64);
+            receipt.addActionListener(e -> {
+                CardLayout cardLayout = (CardLayout) MainFrame.getPanels().getLayout();
+                cardLayout.show(MainFrame.getPanels(), "ResultPanel");
             });
 
             add(cancel);
+            add(receipt);
         }
 
-        private JButton createButton(String imagePath) {
+        private JButton createButton(String imagePath, int width, int height) {
             URL url = getClass().getClassLoader().getResource(imagePath);
             ImageIcon icon = new ImageIcon(url);
             JButton button = new JButton(icon);
-            button.setPreferredSize(new Dimension(158, 65));
+            button.setPreferredSize(new Dimension(width, height));
             button.setBorderPainted(false);
             button.setFocusPainted(false);
             button.setContentAreaFilled(false);
-            button.addActionListener(e -> {
-                CardLayout cardLayout = (CardLayout) MainFrame.getPanels().getLayout();
-                cardLayout.next(MainFrame.getPanels());
-            });
             return button;
         }
     }

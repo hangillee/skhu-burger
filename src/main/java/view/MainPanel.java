@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -58,23 +59,24 @@ public class MainPanel extends JPanel {
             setBackground(Color.decode("#FFFFFF"));
             setLayout(new FlowLayout(FlowLayout.CENTER, 40, 5));
 
-            JButton inDoor = createButton("src/main/resources/main/InDoor.png");
-            JButton toGo = createButton("src/main/resources/main/ToGo.png");
+            JButton inDoor = createButton("images/main/InDoor.png");
+            JButton toGo = createButton("images/main/ToGo.png");
 
             add(inDoor);
             add(toGo);
         }
 
         private JButton createButton(String imagePath) {
-            ImageIcon toGoIcon = new ImageIcon(imagePath);
-            JButton button = new JButton(toGoIcon);
+            URL url = getClass().getClassLoader().getResource(imagePath);
+            ImageIcon icon = new ImageIcon(url);
+            JButton button = new JButton(icon);
             button.setPreferredSize(new Dimension(158, 250));
             button.setBorderPainted(false);
             button.setFocusPainted(false);
             button.setContentAreaFilled(false);
             button.addActionListener(e -> {
                 CardLayout cardLayout = (CardLayout) MainFrame.getPanels().getLayout();
-                cardLayout.next(MainFrame.getPanels());
+                cardLayout.show(MainFrame.getPanels(), "CategoryPanel");
             });
             return button;
         }
@@ -86,7 +88,8 @@ public class MainPanel extends JPanel {
             setBackground(Color.decode("#FFFFFF"));
             setLayout(new BorderLayout());
 
-            ImageIcon logoIcon = new ImageIcon("src/main/resources/main/SkhuBurger.png");
+            URL url = getClass().getClassLoader().getResource("images/main/SkhuBurger.png");
+            ImageIcon logoIcon = new ImageIcon(url);
             Image logoImage = logoIcon.getImage();
             logoImage.getScaledInstance(120, 170, Image.SCALE_SMOOTH);
             logoIcon = new ImageIcon(logoImage);

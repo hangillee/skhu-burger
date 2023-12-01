@@ -1,10 +1,11 @@
 package controller;
 
+import view.CardPanel;
+import view.CashPanel;
 import view.CategoryPanel;
 import view.CouponPanel;
 import view.MainFrame;
 import view.MainPanel;
-import view.MenuPanel;
 
 public class SkhuBurgerController {
     private final MainFrame mainFrame = new MainFrame();
@@ -13,7 +14,8 @@ public class SkhuBurgerController {
         MainFrame.getPanels().add(new MainPanel(), "MainPanel");
         MainFrame.getPanels().add(new CategoryPanel(), "CategoryPanel");
         MainFrame.getPanels().add(new CouponPanel(), "CouponPanel");
-        MainFrame.getPanels().add(new MenuPanel(), "MenuPanel");
+        MainFrame.getPanels().add(new CardPanel(), "CardPanel");
+        MainFrame.getPanels().add(new CashPanel(), "CashPanel");
     }
 
     public void printMainFrame() {

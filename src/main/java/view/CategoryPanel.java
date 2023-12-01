@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -52,16 +53,38 @@ public class CategoryPanel extends JPanel {
         public ButtonPanel() {
             setBackground(Color.decode("#FFFFFF"));
             setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+            MenuPanel menuPanel = new MenuPanel();
+            MainFrame.getPanels().add(menuPanel, "MenuPanel");
 
-            JButton setMenu = createButton("src/main/resources/category/Set.png", 200, 220);
+            JButton setMenu = createButton("images/category/Set.png", 200, 220);
             setMenu.addActionListener(e -> {
+                MenuPanel.setCategory("setmenu");
+                MenuPanel.repaintMenuButtons();
                 CardLayout cardLayout = (CardLayout) MainFrame.getPanels().getLayout();
                 cardLayout.show(MainFrame.getPanels(), "MenuPanel");
             });
-            JButton burger = createButton("src/main/resources/category/Burger.png", 200, 220);
-            JButton drink = createButton("src/main/resources/category/Drink.png", 200, 220);
-            JButton side = createButton("src/main/resources/category/Side.png", 200, 220);
-            JButton coupon = createButton("src/main/resources/category/Coupon.png", 410, 120);
+            JButton burger = createButton("images/category/Burger.png", 200, 220);
+            burger.addActionListener(e -> {
+                MenuPanel.setCategory("burger");
+                MenuPanel.repaintMenuButtons();
+                CardLayout cardLayout = (CardLayout) MainFrame.getPanels().getLayout();
+                cardLayout.show(MainFrame.getPanels(), "MenuPanel");
+            });
+            JButton drink = createButton("images/category/Drink.png", 200, 220);
+            drink.addActionListener(e -> {
+                MenuPanel.setCategory("drink");
+                MenuPanel.repaintMenuButtons();
+                CardLayout cardLayout = (CardLayout) MainFrame.getPanels().getLayout();
+                cardLayout.show(MainFrame.getPanels(), "MenuPanel");
+            });
+            JButton side = createButton("images/category/Side.png", 200, 220);
+            side.addActionListener(e -> {
+                MenuPanel.setCategory("side");
+                MenuPanel.repaintMenuButtons();
+                CardLayout cardLayout = (CardLayout) MainFrame.getPanels().getLayout();
+                cardLayout.show(MainFrame.getPanels(), "MenuPanel");
+            });
+            JButton coupon = createButton("images/category/Coupon.png", 410, 120);
             coupon.addActionListener(e -> {
                 CardLayout cardLayout = (CardLayout) MainFrame.getPanels().getLayout();
                 cardLayout.show(MainFrame.getPanels(), "CouponPanel");
@@ -75,7 +98,8 @@ public class CategoryPanel extends JPanel {
         }
 
         private JButton createButton(String imagePath, int width, int height) {
-            ImageIcon icon = new ImageIcon(imagePath);
+            URL url = getClass().getClassLoader().getResource(imagePath);
+            ImageIcon icon = new ImageIcon(url);
             JButton button = new JButton(icon);
             button.setPreferredSize(new Dimension(width, height));
             button.setBorderPainted(false);

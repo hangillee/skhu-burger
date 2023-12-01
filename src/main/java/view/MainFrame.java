@@ -11,6 +11,7 @@ public class MainFrame extends JFrame {
         setTitle("SKHU BURGER");
         setSize(540, 810);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setResizable(false);
     }
 
