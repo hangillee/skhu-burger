@@ -28,64 +28,49 @@ public class MenuRepository {
 
     public Menu findById(Long id) {
         EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
+//        EntityTransaction tx = em.getTransaction();
+//        tx.begin();
         Menu menu = em.find(Menu.class, id);
-        tx.commit();
+//        tx.commit();
         em.close();
         return menu;
     }
 
     public List<Menu> findAll() {
         EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
+//        EntityTransaction tx = em.getTransaction();
+//        tx.begin();
         try {
             String query = "select m from Menu m";
             return em.createQuery(query, Menu.class)
                     .getResultList();
-        } catch (Exception e) {
-            tx.rollback();
         } finally {
             em.close();
         }
-        return null;
     }
 
     public Menu findByName(String name) {
         EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
         try {
             String query = "select m from Menu m where m.name = :name";
             return em.createQuery(query, Menu.class)
                     .setParameter("name", name)
                     .getSingleResult();
-        } catch (Exception e) {
-            tx.rollback();
         } finally {
-            tx.commit();
             em.close();
         }
-        return null;
     }
 
     public List<Menu> findByCategory(String categoryText) {
         Category category = Category.getCategory(categoryText);
         EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
         try {
             String query = "select m from Menu m where m.category = :category";
             return em.createQuery(query, Menu.class)
                     .setParameter("category", category)
                     .getResultList();
-        } catch (Exception e) {
-            tx.rollback();
         } finally {
-            tx.commit();
             em.close();
         }
-        return null;
     }
 }

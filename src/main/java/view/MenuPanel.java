@@ -190,12 +190,15 @@ public class MenuPanel extends JPanel {
             menuInfo.setBounds(10, 0, 380, 60);
             menuListPanel.add(menuInfo);
 
-            JButton plusButton = new JButton("+");
+            Menu menu = menuRepository.findById((long) index);
+
+            URL plusUrl = getClass().getClassLoader().getResource("images/Plus.png");
+            ImageIcon plusIcon = new ImageIcon(plusUrl);
+            JButton plusButton = new JButton(plusIcon);
             plusButton.setPreferredSize(new Dimension(30, 30));
             plusButton.setBounds(400, 15, 30, 30);
             menuListPanel.add(plusButton);
             plusButton.addActionListener(e -> {
-                Menu menu = menuRepository.findById((long) index);
                 if (!orderMenus.containsKey(menu.getName())) {
                     orderMenus.put(menu.getName(), 1);
                     menuInfo.setText(menu.getName()
@@ -217,12 +220,13 @@ public class MenuPanel extends JPanel {
                 shoppingBasket.repaint();
             });
 
-            JButton minusButton = new JButton("-");
+            URL minusUrl = getClass().getClassLoader().getResource("images/Minus.png");
+            ImageIcon minusIcon = new ImageIcon(minusUrl);
+            JButton minusButton = new JButton(minusIcon);
             minusButton.setPreferredSize(new Dimension(30, 30));
             minusButton.setBounds(440, 15, 30, 30);
             menuListPanel.add(minusButton);
             minusButton.addActionListener(e -> {
-                Menu menu = menuRepository.findById((long) index);
                 if (orderMenus.containsKey(menu.getName())) {
                     if (orderMenus.get(menu.getName()) == 1) {
                         orderMenus.remove(menu.getName());
@@ -242,7 +246,6 @@ public class MenuPanel extends JPanel {
             });
 
             addActionListener(e -> {
-                Menu menu = menuRepository.findById((long) index);
                 if (!orderMenus.containsKey(menu.getName())) {
                     orderMenus.put(menu.getName(), 1);
                     menuInfo.setText(menu.getName()
